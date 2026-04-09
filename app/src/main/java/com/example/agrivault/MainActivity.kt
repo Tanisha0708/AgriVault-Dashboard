@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import com.example.agrivault.data.DummyData
 import com.example.agrivault.data.TransactionEntity
 
@@ -38,14 +39,17 @@ fun AgriVaultUI() {
 
     Column(modifier = Modifier.padding(16.dp)) {
 
-        Text(text = "AgriVault", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            text = stringResource(R.string.title_agrivault),
+            style = MaterialTheme.typography.headlineMedium
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
-            label = { Text("Title") }
+            label = { Text(stringResource(R.string.label_title)) }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -53,7 +57,7 @@ fun AgriVaultUI() {
         OutlinedTextField(
             value = amount,
             onValueChange = { amount = it },
-            label = { Text("Amount") }
+            label = { Text(stringResource(R.string.label_amount)) }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -72,12 +76,12 @@ fun AgriVaultUI() {
             // ❌ not clearing input (intentional bug)
 
         }) {
-            Text("Log Expense")
+            Text(stringResource(R.string.action_log_expense))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Total Balance: ₹${transactions.sumOf { it.amount }}") // ❌ wrong label
+        Text("${stringResource(R.string.total_balance)}: ₹${transactions.sumOf { it.amount }}") // ❌ wrong label
 
         Spacer(modifier = Modifier.height(8.dp))
 

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AgriVault</string>
+    <string name="title_agrivault">AgriVault</string>
+    <string name="label_title">शीर्षक</string>
+    <string name="label_amount">रक्कम</string>
+    <string name="action_log_expense">खर्च नोंदवा</string>
+    <string name="total_balance">एकूण शिल्लक</string>
+    <string name="login">लॉगिन</string>
+    <string name="welcome">स्वागत आहे</string>
+    <string name="submit">सबमिट करा</string>
+</resources>
