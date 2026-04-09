@@ -9,10 +9,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import com.example.agrivault.data.DummyData
 import com.example.agrivault.data.TransactionEntity
+import com.example.agrivault.ui.theme.AgriVaultTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -20,7 +22,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AgriVaultUI()
+            AgriVaultTheme {
+                AgriVaultUI()
+            }
         }
     }
 }
@@ -37,57 +41,69 @@ fun AgriVaultUI() {
         }
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
 
-        Text(
-            text = stringResource(R.string.title_agrivault),
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = title,
-            onValueChange = { title = it },
-            label = { Text(stringResource(R.string.label_title)) }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = amount,
-            onValueChange = { amount = it },
-            label = { Text(stringResource(R.string.label_amount)) }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(onClick = {
-            // Add to list (NO validation yet → intentional bug)
-            transactions.add(
-                TransactionEntity(
-                    id = transactions.size, // ❌ bug (intentional)
-                    title = title,
-                    amount = amount.toDoubleOrNull() ?: 0.0,
-                    timestamp = System.currentTimeMillis()
-                )
+            Text(
+                text = stringResource(R.string.title_agrivault),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
-            // ❌ not clearing input (intentional bug)
+            Spacer(modifier = Modifier.height(16.dp))
 
-        }) {
-            Text(stringResource(R.string.action_log_expense))
-        }
+            OutlinedTextField(
+                value = title,
+                onValueChange = { title = it },
+                label = { Text(stringResource(R.string.label_title)) }
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Text("${stringResource(R.string.total_balance)}: ₹${transactions.sumOf { it.amount }}") // ❌ wrong label
+            OutlinedTextField(
+                value = amount,
+                onValueChange = { amount = it },
+                label = { Text(stringResource(R.string.label_amount)) }
+            )
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        LazyColumn {
-            items(transactions) { txn ->
-                Text("${txn.title} - ₹${txn.amount}")
+            Button(onClick = {
+                // Add to list (NO validation yet -> intentional bug)
+                transactions.add(
+                    TransactionEntity(
+                        id = transactions.size, // intentional bug
+                        title = title,
+                        amount = amount.toDoubleOrNull() ?: 0.0,
+                        timestamp = System.currentTimeMillis()
+                    )
+                )
+
+                // not clearing input (intentional bug)
+
+            }) {
+                Text(stringResource(R.string.action_log_expense))
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "${stringResource(R.string.total_balance)}: ₹${transactions.sumOf { it.amount }}",
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyColumn {
+                items(transactions) { txn ->
+                    Text(
+                        text = "${txn.title} - ₹${txn.amount}",
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
         }
     }
