@@ -8,4 +8,6 @@
     <string name="login">लॉगिन</string>
     <string name="welcome">स्वागत है</string>
     <string name="submit">सबमिट</string>
+    <string name="error_invalid_amount">कृपया सही राशि दर्ज करें</string>
+    <string name="error_future_date_not_allowed">भविष्य की तारीख मान्य नहीं है</string>
 </resources>

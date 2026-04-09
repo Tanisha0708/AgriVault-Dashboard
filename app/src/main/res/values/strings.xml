@@ -8,4 +8,6 @@
     <string name="login">Login</string>
     <string name="welcome">Welcome</string>
     <string name="submit">Submit</string>
+    <string name="error_invalid_amount">Enter valid amount</string>
+    <string name="error_future_date_not_allowed">Future dates are not allowed</string>
 </resources>

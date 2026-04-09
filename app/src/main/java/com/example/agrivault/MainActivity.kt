@@ -15,6 +15,9 @@ import androidx.compose.ui.res.stringResource
 import com.example.agrivault.data.DummyData
 import com.example.agrivault.data.TransactionEntity
 import com.example.agrivault.ui.theme.AgriVaultTheme
+import com.example.agrivault.util.isValidAmount
+import com.example.agrivault.util.isValidPastDate
+import java.time.LocalDate
 
 class MainActivity : ComponentActivity() {
 
@@ -34,6 +37,7 @@ fun AgriVaultUI() {
 
     var title by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
+    var validationError by remember { mutableStateOf<String?>(null) }
 
     val transactions = remember {
         mutableStateListOf<TransactionEntity>().apply {
@@ -72,6 +76,17 @@ fun AgriVaultUI() {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(onClick = {
+                val selectedDate = LocalDate.now()
+                if (!isValidAmount(amount)) {
+                    validationError = stringResource(R.string.error_invalid_amount)
+                    return@Button
+                }
+                if (!isValidPastDate(selectedDate)) {
+                    validationError = stringResource(R.string.error_future_date_not_allowed)
+                    return@Button
+                }
+                validationError = null
+
                 // Add to list (NO validation yet -> intentional bug)
                 transactions.add(
                     TransactionEntity(
@@ -86,6 +101,14 @@ fun AgriVaultUI() {
 
             }) {
                 Text(stringResource(R.string.action_log_expense))
+            }
+
+            validationError?.let { errorMessage ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = errorMessage,
+                    color = Color.Red
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
